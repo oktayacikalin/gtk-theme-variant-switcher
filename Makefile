@@ -1,6 +1,6 @@
 ROOT := $(shell pwd)
 PREFIX := $(shell readlink -f ~/.local)
-OBJECTS := config.ini switcher.py
+OBJECTS := switcher.py
 
 uninstall:
 	rm -r $(PREFIX)/share/gtk-theme-variant-switcher
@@ -15,6 +15,9 @@ install:
 	cp -a switcher.png $(PREFIX)/share/icons/gtk-theme-variant-switcher.png
 	cp -a switcher.desktop $(PREFIX)/share/applications/gtk-theme-variant-switcher.desktop
 	sed -i 's!switcher.py!$(PREFIX)/share/gtk-theme-variant-switcher/switcher.py!' $(PREFIX)/share/applications/gtk-theme-variant-switcher.desktop
+	cp -a gschema.xml $(PREFIX)/share/glib-2.0/schemas/org.gtk.Settings.ThemeVariantSwitcher.gschema.xml
+	sudo ln -snf $(PREFIX)/share/glib-2.0/schemas/org.gtk.Settings.ThemeVariantSwitcher.gschema.xml /usr/share/glib-2.0/schemas/
+	sudo glib-compile-schemas /usr/share/glib-2.0/schemas/
 
 all:
 	@echo "Usage: $0 [install|uninstall]"

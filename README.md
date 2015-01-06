@@ -8,31 +8,36 @@ A small service which forces certain windows to use a specific Gtk theme variant
 
 ## Installation
 Running "make install" in the root of the repository will install everything
-into "$HOME/.local". You should then be able to find the
-"Gtk Theme Variant Switcher" in your launcher menu.
+into "$HOME/.local". It will also try to symlink it's glib schema into the system
+schema folder and recompile them.
+
+You should then be able to find the "Gtk Theme Variant Switcher" in your
+launcher menu.
 
 You might want to add it to your autostart apps.
 
 ## Configuration
-You can find the "config.ini" with some default settings in
-"$HOME/.local/share/gtk-theme-variant-switcher".
+You can find the configuration via dconf-editor in:
+/org/gtk/settings/theme-variant-switcher/
 
-The format is simple. The left side is the WM_CLASS of a window, while having
-the requested Gtk theme variant on the right (either "light" or "dark").
+The format of the key "**by-class**" is simple and consists of an array of 3 strings
+each:
+* WM_CLASS of a window
+* requested Gtk theme variant (either "light" or "dark")
+* Human readable description/comment (e.g. for cryptic classes)
 
 You can grab the WM_CLASS by executing "xprop WM_CLASS" in the shell and
 clicking on the window you want to modify.
 
-After modifying the config.ini, you have to restart the switcher. For this you
-have to kill and restart it:
+You can also just run the switcher.py in the console and look for the open window in the output. But before running it, make sure that you change the line defining the LOG_LEVEL to 'DEBUG'. You can find that relatively at the beginning of the installed switcher.py file.
 
-1. $ kill $(ps x | grep switcher.py | grep -v grep | cut -d' ' -f2)
-
-2. And then start it again using your launcher.
+Any change to the "**by-class**" key should be reflected instantly. You should
+also see some output in the console if you're having it open currently.
 
 ## Todos
-For starters I would like move the whole configuration into
-something like dconf and write some configuration GUI for it. This would also
-result in not having you to kill and restart it again.
+* Write some configuration GUI for it.
 
-Until then, please don't kill me for this little inconvinience. Thanks!
+Please tell me your impressions, ideas and critics. Feel free to open a bug
+report if necessary.
+
+Thanks!

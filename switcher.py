@@ -9,8 +9,6 @@
 from gi.repository import Gtk, Gio, Gdk, Wnck
 import subprocess
 import sys
-import configparser
-from os.path import join, dirname
 import signal
 import logging
 
@@ -32,29 +30,44 @@ class Application(Gtk.Application):
     def __init__(self):
         Gtk.Application.__init__(self, application_id='de.gtk-theme-variant-switcher',
                                  flags=Gio.ApplicationFlags.FLAGS_NONE)
-        config_filepath = join(dirname(__file__), 'config.ini')
-        config = configparser.ConfigParser()
-        config.readfp(open(config_filepath))
-        self.variants = dict(config.items('variants'))
+        # http://zderadicka.eu/gsettings-flexible-configuration-system/
+        self.settings = Gio.Settings('org.gtk.Settings.ThemeVariantSwitcher')
+        self.settings.connect('changed', self.on_settings_changed)
+        self.by_class = dict((item[0].lower(), item[1]) for item in self.settings.get_value('by-class').unpack())
         self.connect('activate', self.on_activate)
 
-    def on_window_opened(self, screen, window):
-        # logger.info('Window opened: %s' % window.get_xid())
-        instance_name = window.get_class_instance_name()
-        try:
-            variant = self.variants[instance_name]
-            set_theme(variant, window.get_xid())
-            logger.info('Set theme variant for window %s of %s to %s.' % (window.get_xid(), window.get_class_group_name(), variant))
-            logger.debug('Window name = "%s"' % window.get_name())
-        except KeyError:
-            pass
+    def update_window(self, screen, window):
+        window_id = window.get_xid()
+        window_name = window.get_name().lower()
+        window_group = window.get_class_group_name()
+        instance_name = window.get_class_instance_name().lower()
+        logger.debug('Got window: %s ("%s"/"%s")' % (instance_name, window_group, window_name))
+        variant = self.by_class.get(instance_name, None)
+        if variant:
+            set_theme(variant, window_id)
+            logger.info('Setting window "%s" to "%s".' % (instance_name, variant))
+
+    def on_settings_changed(self, settings, keys):
+        by_class = dict((item[0].lower(), item[1]) for item in settings.get_value('by-class').unpack())
+        changes = []
+        for key, val in by_class.items():
+            if key in self.by_class and self.by_class[key] != val:
+                changes.append(key)
+            elif key not in self.by_class:
+                changes.append(key)
+        self.by_class = by_class
+        screen = Wnck.Screen.get_default()
+        for window in screen.get_windows():
+            instance_name = window.get_class_instance_name().lower()
+            if instance_name in changes:
+                self.update_window(screen, window)
 
     def on_activate(self, data=None):
         window = Gtk.ApplicationWindow(application=self)
         self.add_window(window)
 
         screen = Wnck.Screen.get_default()
-        screen.connect('window-opened', self.on_window_opened)
+        screen.connect('window-opened', self.update_window)
         logger.info('Listening for newly opened windows.')
 
 
