@@ -1,5 +1,7 @@
 # Gtk Theme Variant Switcher
 
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/theblacklion/gtk-theme-variant-switcher?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 A small service which forces certain windows to use a specific Gtk theme variant. E.g. force dark window borders.
 
 ## Requirements
