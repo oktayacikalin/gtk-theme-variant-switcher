@@ -4,15 +4,16 @@
   <schema id="org.gtk.Settings.ThemeVariantSwitcher" path="/org/gtk/settings/theme-variant-switcher/">
     <key name="by-class" type="a(sss)">
       <default>[
-      	("sublime_text","dark","Sublime Text 3"),
-      	("crx_jeogkiiogjbmhklcnbgkdcjoioegiknm","dark","Slack"),
-      	("crx_ojcflmmmcfpacggndoaaflkmcoblhnbh","dark","Wunderlist"),
-      	("crx_caoihfibgoiiakncomhccbflmlgjaohf","dark","Gistbox"),
-      	("crx_nckgahadagoaajjgafhacjanaoiihapd","dark","Google Hangouts"),
-      	("crx_boeajhmfdjldchidhphikilcgdacljfm","dark","Facebook"),
-      	("Google-chrome","light","Google Chrome"),
-      	("Opera beta","dark","Opera Beta"),
-      	("sun-awt-X11-XFramePeer","dark","PHPStorm")
+        ("sublime_text","dark","Sublime Text 3"),
+        ("crx_jeogkiiogjbmhklcnbgkdcjoioegiknm","dark","Slack"),
+        ("crx_ojcflmmmcfpacggndoaaflkmcoblhnbh","dark","Wunderlist"),
+        ("crx_caoihfibgoiiakncomhccbflmlgjaohf","dark","Gistbox"),
+        ("crx_nckgahadagoaajjgafhacjanaoiihapd","dark","Google Hangouts"),
+        ("crx_boeajhmfdjldchidhphikilcgdacljfm","dark","Facebook"),
+        ("Google-chrome","light","Google Chrome"),
+        ("Opera beta","dark","Opera Beta"),
+        ("sun-awt-X11-XFramePeer","dark","PHPStorm"),
+        ("brackets","dark","Brackets")
       ]</default>
       <summary>By WM class</summary>
       <description>List of WM classes to modify.</description>
