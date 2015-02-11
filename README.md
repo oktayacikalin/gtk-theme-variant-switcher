@@ -4,7 +4,7 @@ A small service which forces certain windows to use a specific Gtk theme variant
 
 ## Requirements
 * Python 3
-* Gnome Shell or Pantheon Shell (e.g. Elementary OS)
+* Gnome Shell or Pantheon Shell (e.g. elementary OS)
 
 ## Installation
 Running "make install" in the root of the repository will install everything
