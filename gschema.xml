@@ -12,7 +12,7 @@
         ("crx_boeajhmfdjldchidhphikilcgdacljfm","dark","Facebook"),
         ("Google-chrome","light","Google Chrome"),
         ("Opera beta","dark","Opera Beta"),
-        ("sun-awt-X11-XFramePeer","dark","PHPStorm")
+        ("sun-awt-X11-XFramePeer","dark","PHPStorm"),
         ("brackets","dark","Brackets")
       ]</default>
       <summary>By WM class</summary>
