@@ -10,6 +10,7 @@ uninstall:
 install:
 	mkdir -p $(PREFIX)/share/icons
 	mkdir -p $(PREFIX)/share/applications
+	mkdir -p $(PREFIX)/share/glib-2.0/schemas
 	mkdir -p $(PREFIX)/share/gtk-theme-variant-switcher
 	cp -a $(OBJECTS) $(PREFIX)/share/gtk-theme-variant-switcher/
 	cp -a switcher.png $(PREFIX)/share/icons/gtk-theme-variant-switcher.png
