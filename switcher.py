@@ -36,11 +36,23 @@ class Application(Gtk.Application):
         self.by_class = dict((item[0].lower(), item[1]) for item in self.settings.get_value('by-class').unpack())
         self.connect('activate', self.on_activate)
 
-    def update_window(self, screen, window):
+    def on_window_class_changed(self, window):
+        logger.debug('Window class changed: %s' % window.get_xid())
+        self.update_window(window)
+
+    def on_screen_window_opened(self, screen, window):
+        logger.debug('New window: %s' % window.get_xid())
+        window.connect('class-changed', self.on_window_class_changed)
+        self.update_window(window)
+
+    def update_window(self, window):
         window_id = window.get_xid()
         window_name = window.get_name().lower()
         window_group = window.get_class_group_name()
-        instance_name = window.get_class_instance_name().lower()
+        instance_name = window.get_class_instance_name()
+        if instance_name is None:
+            return
+        instance_name = instance_name.lower()
         logger.debug('Got window: %s ("%s"/"%s")' % (instance_name, window_group, window_name))
         variant = self.by_class.get(instance_name, None)
         if variant:
@@ -58,16 +70,20 @@ class Application(Gtk.Application):
         self.by_class = by_class
         screen = Wnck.Screen.get_default()
         for window in screen.get_windows():
-            instance_name = window.get_class_instance_name().lower()
+            instance_name = window.get_class_instance_name()
+            if instance_name is None:
+                continue
+            instance_name = instance_name.lower()
             if instance_name in changes:
-                self.update_window(screen, window)
+                window.connect('class-changed', self.on_window_class_changed)
+                self.update_window(window)
 
     def on_activate(self, data=None):
         window = Gtk.ApplicationWindow(application=self)
         self.add_window(window)
 
         screen = Wnck.Screen.get_default()
-        screen.connect('window-opened', self.update_window)
+        screen.connect('window-opened', self.on_screen_window_opened)
         logger.info('Listening for newly opened windows.')
 
 
