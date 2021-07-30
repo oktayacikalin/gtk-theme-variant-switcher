@@ -6,6 +6,9 @@
 # @copyright Oktay Acikalin
 # @license   MIT (LICENSE.txt)
 
+import gi
+gi.require_version('Gtk', '3.0')
+
 from gi.repository import Gtk, Gio, Gdk, Wnck
 import subprocess
 import sys
