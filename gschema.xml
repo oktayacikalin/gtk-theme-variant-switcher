@@ -13,7 +13,8 @@
         ("Google-chrome","light","Google Chrome"),
         ("Opera beta","dark","Opera Beta"),
         ("sun-awt-X11-XFramePeer","dark","PHPStorm"),
-        ("brackets","dark","Brackets")
+        ("brackets","dark","Brackets"),
+        ('Gimp-2.10','dark','gimp')
       ]</default>
       <summary>By WM class</summary>
       <description>List of WM classes to modify.</description>
